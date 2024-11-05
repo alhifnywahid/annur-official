@@ -11,19 +11,19 @@ export const metadata = {
 
 export default async function AdminLayout({ children }) {
   const session = await auth();
-  // if (!session)
-  //   return (
-  //     <div className="w-screen h-screen flex items-center justify-center font-bold text-lg">
-  //       <form
-  //         action={async () => {
-  //           "use server";
-  //           await signIn("google");
-  //         }}
-  //       >
-  //         <Button type="submit">Login Dulu Bro!</Button>
-  //       </form>
-  //     </div>
-  //   );
+  if (!session)
+    return (
+      <div className="w-screen h-screen flex items-center justify-center font-bold text-lg">
+        <form
+          action={async () => {
+            "use server";
+            await signIn("google");
+          }}
+        >
+          <Button type="submit">Login Dulu Bro!</Button>
+        </form>
+      </div>
+    );
   return (
     <main className="relative max-w-lg mx-auto border h-screen flex flex-col">
       <Header />

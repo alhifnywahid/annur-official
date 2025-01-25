@@ -1,3 +1,4 @@
+import CardUser from "@/components/card-user";
 import {
   Accordion,
   AccordionContent,
@@ -5,7 +6,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { numberToIdr } from "@/utils/toIDR";
 import moment from "moment";
 import { Fragment } from "react";
 
@@ -22,39 +22,7 @@ export default async function Page() {
             <Accordion type="single" collapsible className="w-full">
               {dataBulanan.map((bulan, i) => (
                 <Fragment key={i}>
-                  <AccordionItem value={`item-${i + 1}`} className="w-full">
-                    <AccordionTrigger>{moment(bulan.tanggal, "MMYYYY").format("MMMM YYYY")}</AccordionTrigger>
-                    <AccordionContent>
-                      <div className="flex flex-col gap-2">
-                        {bulan.user.map((user, i) => (
-                          <Fragment key={i}>
-                            <Card
-                              ifSome={
-                                bulan.pembayaran.reduce(
-                                  (a, b) => a + b.nominal,
-                                  0
-                                ) === user.total_bayar
-                              }
-                              name={user.nama}
-                              price={
-                                bulan.pembayaran.reduce(
-                                  (a, b) => a + b.nominal,
-                                  0
-                                ) === user.total_bayar
-                                  ? "Lunas"
-                                  : `- ${numberToIdr(
-                                      bulan.pembayaran.reduce(
-                                        (a, b) => a + b.nominal,
-                                        0
-                                      ) - user.total_bayar
-                                    )}`
-                              }
-                            />
-                          </Fragment>
-                        ))}
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
+                  <DataAccordion data={bulan} i={i} />
                 </Fragment>
               ))}
             </Accordion>
@@ -65,15 +33,28 @@ export default async function Page() {
   );
 }
 
-const Card = (props) => {
+function DataAccordion({ data, i }) {
+  const { user, pembayaran } = data;
+  const perBulan = pembayaran.reduce((a, b) => a + b.nominal, 0) * user.length;
+  const denda = user.reduce((a, b) => a + b.denda.length * 10000, 0);
+  const totalBayar = user.reduce((a, b) => a + b.total_bayar, 0);
+  const isHaveNotPaid = perBulan + denda != totalBayar;
+  const monthNow = moment(data.tanggal, "MMYYYY").format("MMMM YYYY");
+
   return (
-    <div
-      className={`flex items-center justify-between rounded-md p-4 w-full hover:bg-gray-900 cursor-pointer transition-all border ${
-        props.className
-      } ${props.ifSome ? "border-green-700" : "border-red-700"}`}
-    >
-      <h1 className="text-lg font-semibold">{props.name}</h1>
-      <p className="text-lg font-semibold">{props.price}</p>
-    </div>
+    <AccordionItem value={`item-${i + 1}`} className="w-full">
+      <AccordionTrigger className={isHaveNotPaid && "text-red-500"}>
+        {monthNow}
+      </AccordionTrigger>
+      <AccordionContent>
+        <div className="flex flex-col gap-2">
+          {user.map((u, i) => (
+            <Fragment key={i}>
+              <CardUser bulan={data} user={u} />
+            </Fragment>
+          ))}
+        </div>
+      </AccordionContent>
+    </AccordionItem>
   );
-};
+}

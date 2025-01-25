@@ -67,3 +67,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .responsive-check {
+    @apply z-50 block h-10 before:flex rounded-md before:justify-center  before:items-center w-28 fixed top-2 left-2 before:w-full before:h-full text-white bg-indigo-700 border-2 before:content-['NORMAL'] sm:before:content-['SM'] md:before:content-['MD'] lg:before:content-['LG'] xl:before:content-['XL'] 2xl:before:content-['2XL']
+  }
+}

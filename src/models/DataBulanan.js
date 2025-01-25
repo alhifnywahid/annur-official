@@ -4,13 +4,25 @@ const Schema = mongoose.Schema;
 const PembayaranSchema = new Schema({
 	title: { type: String, required: true },
 	nominal: { type: Number, required: true },
-});
+}); 
 
-const UserSchema = new Schema({
-	nama: { type: String, required: true },
-	total_bayar: { type: Number, required: true },
-	denda: { type: Number, required: true },
-});
+const UserSchema = new Schema(
+	{
+		nama: { type: String, required: true },
+		total_bayar: { type: Number, required: true },
+		denda: {
+			type: [String],
+			validate: {
+				validator: function (value) {
+					return Array.isArray(value) && new Set(value).size === value.length;
+				},
+				message: "Denda harus berupa array string unik",
+			},
+			default: [],
+		},
+	},
+	{ _id: false }
+);
 
 const DataBulananSchema = new Schema(
 	{

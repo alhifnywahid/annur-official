@@ -6,7 +6,7 @@ export default async function Page() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/data-bulanan`, {
     cache: "no-store",
   });
-  const { listHutang } = await res.json(); 
+  const { listHutang } = await res.json();
   return (
     <main className="flex h-full w-full flex-col overflow-hidden">
       <div className="flex flex-col gap-3 h-full">
@@ -15,6 +15,7 @@ export default async function Page() {
             {listHutang.map((user, i) => (
               <Fragment key={i}>
                 <Card
+                  data={user}
                   name={user.nama}
                   price={numberToIdr(user.nominal)}
                   ifSome={user.nominal === 0}
@@ -29,6 +30,8 @@ export default async function Page() {
 }
 
 const Card = (props) => {
+  console.log(props.data);
+
   return (
     <div
       className={`flex items-center justify-between rounded-md p-4 w-full hover:bg-gray-900 cursor-pointer transition-all border ${

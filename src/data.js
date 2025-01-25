@@ -7,7 +7,7 @@ const dataUser = async () => {
 		return {
 			nama: user.nama,
 			total_bayar: user.total_bayar || 0,
-			denda: 0,
+			denda: [],
 		};
 	});
 	return mapping;
@@ -20,11 +20,11 @@ export async function getDataBulananNew() {
 		pembayaran: [
 			{
 				title: "Listrik",
-				nominal: 25000,
+				nominal: 15000,
 			},
 			{
 				title: "WIFI",
-				nominal: 45000,
+				nominal: 55000,
 			},
 		],
 		user: userData,

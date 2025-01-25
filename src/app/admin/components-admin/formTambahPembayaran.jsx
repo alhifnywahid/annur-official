@@ -10,10 +10,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input"; 
+import { Input } from "@/components/ui/input";
+import { numberToIdr } from "@/utils/toIDR";
 import { useState } from "react";
 
-export default function FormTambahPembayaran(props) { 
+export default function FormTambahPembayaran(props) {
   const [loading, setIsLoading] = useState(false);
   const handleSubmit = async (e) => {
     setIsLoading(true);
@@ -35,7 +36,7 @@ export default function FormTambahPembayaran(props) {
           }),
         }
       );
-      if (res.ok) return window.location.reload(); 
+      if (res.ok) return window.location.reload();
       alert(MESSAGE);
     } catch (e) {
       alert(MESSAGE);
@@ -54,7 +55,7 @@ export default function FormTambahPembayaran(props) {
         </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
-        <form onSubmit={handleSubmit} className=" ">
+        <form onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle>Tambah Pembayaran {props.name}</DialogTitle>
           </DialogHeader>
@@ -62,7 +63,7 @@ export default function FormTambahPembayaran(props) {
             <Input
               type="number"
               required
-              placeholder="Nominal Pembayaran"
+              placeholder={`Nominal Pembayaran Max ${numberToIdr(props.max)}`}
               min={0}
               max={props.max}
             />

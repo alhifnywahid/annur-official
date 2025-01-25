@@ -37,9 +37,9 @@ export default async function Page() {
                               bulan.pembayaran.reduce(
                                 (a, b) => a + b.nominal,
                                 0
-                              ) -
-                              user.total_bayar -
-                              user.denda
+                              ) +
+                              user.denda.length * 10000 -
+                              user.total_bayar
                             }
                             name={user.nama}
                             tanggal={bulan.tanggal}
@@ -53,7 +53,9 @@ export default async function Page() {
                                     bulan.pembayaran.reduce(
                                       (a, b) => a + b.nominal,
                                       0
-                                    ) - user.total_bayar 
+                                    ) +
+                                      user.denda.length * 10000 -
+                                      user.total_bayar
                                   )}`
                             }
                           />
@@ -73,14 +75,14 @@ export default async function Page() {
 
 const getUnpaidMonths = (data) => {
   return data
-    .map((month) => { 
+    .map((month) => {
       const totalPayment = month.pembayaran.reduce(
         (sum, payment) => sum + payment.nominal,
         0
-      ); 
+      );
       const unpaidUsers = month.user.filter(
         (user) => user.total_bayar < totalPayment
-      ); 
+      );
       if (unpaidUsers.length > 0) {
         return {
           tanggal: month.tanggal,

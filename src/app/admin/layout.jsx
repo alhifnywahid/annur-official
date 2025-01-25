@@ -11,6 +11,7 @@ export const metadata = {
 
 export default async function AdminLayout({ children }) {
   const session = await auth();
+  console.log(session);
   if (!session)
     return (
       <div className="w-screen h-screen flex items-center justify-center font-bold text-lg">

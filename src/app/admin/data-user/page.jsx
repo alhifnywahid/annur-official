@@ -8,11 +8,16 @@ export default async function Page() {
     cache: "no-store",
   });
   const user = await res.json();
+  console.log(user);
   return (
     <div className="flex flex-col gap-2 h-full my-3">
       <ScrollArea className="h-full w-full rounded-md">
         <div className="">
-          <Accordion type="single" collapsible className="w-full flex flex-col gap-2">
+          <Accordion
+            type="single"
+            collapsible
+            className="w-full flex flex-col gap-2"
+          >
             {user.map((v, i) => (
               <Fragment key={i}>{<Card name={v.nama} />}</Fragment>
             ))}

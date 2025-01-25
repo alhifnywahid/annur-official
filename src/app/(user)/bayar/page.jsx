@@ -6,6 +6,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaWhatsapp } from "react-icons/fa6";
 
+const text = [
+  "Jika sudah melakukan pembayaran harap konfirmasi ke whastapp di atas!",
+  "Waktu liburan/tidak ada di asrama tetap wajib melakukan pembayaran!",
+  "Pembayaran yang terlamat akan dikenakan dendan sebesar Rp. 10.000 perbulan.",
+];
+
 export default async function Page() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/data-bulanan`, {
     cache: "no-store",
@@ -65,15 +71,11 @@ export default async function Page() {
             </Link>
           </div>
 
-          <p className="border rounded-md p-2 text-center">
-            Jika sudah melakukan pembayaran harap konfirmasi ke whastapp di
-            atas!
-          </p>
-
-          <p className="border rounded-md p-2 text-center">
-            Catatan : Waktu liburan/tidak ada di asrama tetap wajib melakukan
-            pembayaran!
-          </p>
+          {text.map((v, i) => (
+            <p key={i} className="border rounded-md p-2 text-center">
+              {v}
+            </p>
+          ))}
         </div>
       </div>
     </ScrollArea>

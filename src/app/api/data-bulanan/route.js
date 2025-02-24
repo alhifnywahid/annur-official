@@ -6,7 +6,7 @@ import hitungHutang from "@/utils/hitung-hutang";
 import moment from "moment";
 import { checkNowMonth } from "./check-nowmonth";
 
-export const dynamic = "force-dynamic"; 
+// export const dynamic = "force-dynamic"; 
 
 export async function GET() {
 	try {

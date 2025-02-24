@@ -5,8 +5,13 @@ import { numberToIdr } from "@/utils/toIDR";
 import moment from "moment";
 import { Fragment } from "react";
 export default async function Home() {
+  // const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/data-bulanan`, {
+  //   cache: "no-store",
+  // });
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/data-bulanan`, {
-    cache: "no-store",
+    next: {
+      tags: ["data-bulanan"]
+    },
   });
   const { dataPengeluaran, dataPemasukan } = await res.json();
   const PENGELUARAN = "Pengeluaran";

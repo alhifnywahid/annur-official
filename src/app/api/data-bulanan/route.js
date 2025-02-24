@@ -6,7 +6,7 @@ import hitungHutang from "@/utils/hitung-hutang";
 import moment from "moment";
 import { checkNowMonth } from "./check-nowmonth";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic"; 
 
 export async function GET() {
 	try {
@@ -36,6 +36,7 @@ export async function GET() {
 		const listTagihan = dataBulanan.map((data) => data.pembayaran).flat();
 
 		return Response.json({
+			a: new Date().toISOString(),
 			status: true,
 			listTagihan,
 			dataBulanan,
